@@ -9,6 +9,18 @@ if [ "$(lsb_release -rs)" != "20.04" ]; then
   exit 1
 fi
 
+# Check if Squid is installed
+if dpkg -s squid | grep -q "Status: install"; then
+    echo "Squid is already installed. Uninstalling..."
+    sudo apt-get purge -y squid > /dev/null 2>&1
+fi
+
+# Check if ufdbGuard is installed
+if dpkg -s ufdbguard | grep -q "Status: install"; then
+    echo "ufdbGuard is already installed. Uninstalling..."
+    sudo apt-get purge -y ufdbguard > /dev/null 2>&1
+fi
+
 # Disable UFW
 ufw disable > /dev/null 2>&1
 
