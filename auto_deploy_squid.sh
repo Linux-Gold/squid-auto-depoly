@@ -20,9 +20,9 @@ echo "Downloading packages..."
 if [ -e ufdbguard_1.35.5-ubuntu20.04_amd64.deb ] && [ -e squid_4.10-1ubuntu1.4_amd64.deb ] && [ -e squid-common_4.10-1ubuntu1.4_all.deb ]; then
     echo "All packages already exist."
 else
-    wget https://github.com/Linux-Gold/squid-auto-depoly/blob/main/ufdbguard_1.35.5-ubuntu20.04_amd64.deb 2> /dev/null
-    wget https://github.com/Linux-Gold/squid-auto-depoly/blob/main/squid_4.10-1ubuntu1.4_amd64.deb 2> /dev/null
-    wget https://github.com/Linux-Gold/squid-auto-depoly/blob/main/squid-common_4.10-1ubuntu1.4_all.deb 2> /dev/null
+    wget https://www.urlfilterdb.com/files/downloads/ufdbguard_1.35.5-ubuntu20.04_amd64.deb 2> /dev/null
+    wget https://launchpad.net/~ubuntu-security-proposed/+archive/ubuntu/ppa/+build/21654497/+files/squid_4.10-1ubuntu1.4_amd64.deb 2> /dev/null
+    wget https://launchpad.net/~ubuntu-security-proposed/+archive/ubuntu/ppa/+build/21654497/+files/squid-common_4.10-1ubuntu1.4_all.deb 2> /dev/null
 fi
 
 # Install downloaded packages
