@@ -67,10 +67,28 @@ cat << EOF > /opt/scripts/update_blacklist_squid_ufdb.sh
 systemctl stop squid.service
 systemctl stop ufdbguard.service
 
+# Parse command line arguments
+SKIP_CURL=false
+
+while getopts "s" opt; do
+  case $opt in
+    s)
+      SKIP_CURL=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
 # Update blacklist
-curl -L "ftp://ftp.ut-capitole.fr/pub/reseau/cache/squidguard_contrib/blacklists.tar.gz" -o "/tmp/blacklists.tar.gz"
-tar -xzf /tmp/blacklists.tar.gz -C /var/ufdbguard
-rm -f /tmp/blacklists.tar.gz
+if [ "$SKIP_CURL" = false ]; then
+  curl -L "ftp://ftp.ut-capitole.fr/pub/reseau/cache/squidguard_contrib/blacklists.tar.gz" -o "/tmp/blacklists.tar.gz"
+  tar -xzf /tmp/blacklists.tar.gz -C /var/ufdbguard
+  rm -f /tmp/blacklists.tar.gz
+fi
+
 ufdbConvertDB /var/ufdbguard/blacklists/
 
 # Update squid
