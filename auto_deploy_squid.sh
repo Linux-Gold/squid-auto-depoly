@@ -75,6 +75,9 @@ deploy_ubuntu() {
       exit 1
     fi
     
+    # stop automatic update squid
+    apt-mark hold squid squid-common &> /dev/nul
+    
     # Download and extract blacklists
     echo "Downloading and extracting blacklists..."
     if [ -e blacklists.tar.gz ]; then
