@@ -122,19 +122,19 @@ systemctl stop ufdbguard.service
 SKIP_CURL=false
 
 while getopts "s" opt; do
-  case $opt in
+  case \$opt in
     s)
       SKIP_CURL=true
       ;;
     \?)
-      echo "Invalid option: -$OPTARG" >&2
+      echo "Invalid option: -\$OPTARG" >&2
       exit 1
       ;;
   esac
 done
 
 # Update blacklist
-if [ "$SKIP_CURL" = false ]; then
+if [ "\$SKIP_CURL" = false ]; then
   wget -O "/tmp/blacklists.tar.gz" "ftp://ftp.ut-capitole.fr/pub/reseau/cache/squidguard_contrib/blacklists.tar.gz"
   tar -xzf /tmp/blacklists.tar.gz -C /var/ufdbguard
   rm -f /tmp/blacklists.tar.gz
@@ -153,6 +153,10 @@ rm -f /tmp/ufdbguardd-03977
 # Restart services
 systemctl restart ufdbguard.service
 systemctl restart squid.service
+
+if [ \$? -eq 0 ]; then
+   echo -e  "\033[32mUpdate Successful.\033[0m"
+fi
     
 EOF
     chmod +x /opt/scripts/update_blacklist_squid_ufdb.sh
@@ -579,7 +583,7 @@ configure_tunnel() {
 
     chmod +x /opt/scripts/init_squid.sh
     chmod +x /etc/rc.local
-    echo '#!\bin\bash' >> /etc/rc.local
+    echo '#!/bin/bash' >> /etc/rc.local
     echo "/opt/scripts/init_squid.sh" >> /etc/rc.local
     echo "exit 0" >> /etc/rc.local
 }
